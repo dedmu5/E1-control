@@ -47,7 +47,7 @@ class G2_PID:
         elif self.awu == "sat" and outputLimited < output:
             self.integral = newIntegral # Simple saturation anti-windup (optional)
 
-        return self.u
+        return self.u if self.u >= 0.0 else 0.0
 
     def set_setPoint(self, setPoint):
         self.setPoint = setPoint
