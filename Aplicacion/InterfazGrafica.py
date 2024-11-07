@@ -1,4 +1,3 @@
-
 from cliente import Cliente # cliente OPCUA
 import threading
 import numpy as np
@@ -153,65 +152,37 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
 
             # Automatic Mode
             html.Div(id='Automatico', className="container", style={'color': colors['text'], 'background-color': 'black', 'border': '2px solid gray'}, children=[
-                html.H3('Automatic Mode', className="subtitle has-text-centered", style={'fontWeight': 'bold'}),
-                html.H4('SetPoints', className="has-text-centered"),
-                html.Div(id='SetPoints', className="columns is-centered", children=[
-                    html.Div(id='Tanque1', className="column has-text-centered", children=[
-                        html.Label('SetPoint Tank 1'),
-                        dcc.Input(id='SPT1', placeholder='Enter value', type='text', value='25')
+                html.H4('PID Constants', className="has-text-centered is-size-2"),
+                html.Div(id='constantes_controladores', className="columns is-centered", children=[
+                        html.Div(id='P1', className="column", children=[
+                            html.H4('Tank 1', className="has-text-centered is-size-4"),
+                            html.H4('SetPoint Tank 1', className="has-text-centered"),
+                            dcc.Slider(id='SPT1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            html.H4('Proportional (Kp1)', className="has-text-centered"),
+                            dcc.Slider(id='Kp1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            html.H4('Integral (Ki1)', className="has-text-centered"),
+                            dcc.Slider(id='Ki1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            html.H4('Derivative (Kd1)', className="has-text-centered"),
+                            dcc.Slider(id='Kd1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            html.H4('Anti wind-up (Kw1)', className="has-text-centered"),
+                            dcc.Slider(id='Kw1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            html.H4('Cutoff Frequency (fc1)', className="has-text-centered"),
+                            dcc.Slider(id='fc1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                     ]),
-                    html.Div(id='Tanque2', className="column has-text-centered", children=[
-                        html.Label('SetPoint Tank 2'),
-                        dcc.Input(id='SPT2', placeholder='Enter value', type='text', value='25')
-                    ])
-                ]),
-                html.H4('PID Constants', className="has-text-centered"),
-                html.Div(id='constantes1_controlador1', className="columns is-centered", children=[
-                        html.Div(id='P1', className="column has-text-centered", children=[
-                            html.Label('Proportional (Kp1)'),
-                            dcc.Input(id='Kp1', placeholder='Enter a value', type='text', value='50')
-                        ]),
-                        html.Div(id='I1', className="column has-text-centered", children=[
-                            html.Label('Integral (Ki1)'),
-                            dcc.Input(id='Ki1', placeholder='Enter a value', type='text', value='0')
-                        ]),
-                        html.Div(id='D1', className="column has-text-centered", children=[
-                            html.Label('Derivative (Kd1)'),
-                            dcc.Input(id='Kd1', placeholder='Enter a value', type='text', value='0')
-                        ]),
-                        html.Div(id='W1', className="column has-text-centered", children=[
-                            html.Label('Anti wind-up (Kw1)'),
-                            dcc.Input(id='Kw1', placeholder='Enter a value', type='text', value='0')
-                        ]),
-                        html.Div(id='fc1', className="column has-text-centered", children=[
-                            html.Label('Cutoff Frequency (fc1)'),
-                            dcc.Input(id='fc1', placeholder='Enter a value', type='text', value='1000')
-                        ])
-                    ]),
-
-                html.H4('PID Constants - Controller 2', className="has-text-centered"),
-
-                # Controlador 2
-                html.Div(id='constantes2_controlador2', className="columns is-centered", children=[
-                    html.Div(id='P2', className="column has-text-centered", children=[
-                        html.Label('Proportional (Kp2)'),
-                        dcc.Input(id='Kp2', placeholder='Enter a value', type='text', value='50')
-                    ]),
-                    html.Div(id='I2', className="column has-text-centered", children=[
-                        html.Label('Integral (Ki2)'),
-                        dcc.Input(id='Ki2', placeholder='Enter a value', type='text', value='0')
-                    ]),
-                    html.Div(id='D2', className="column has-text-centered", children=[
-                        html.Label('Derivative (Kd2)'),
-                        dcc.Input(id='Kd2', placeholder='Enter a value', type='text', value='0')
-                    ]),
-                    html.Div(id='W2', className="column has-text-centered", children=[
-                        html.Label('Anti wind-up (Kw2)'),
-                        dcc.Input(id='Kw2', placeholder='Enter a value', type='text', value='0')
-                    ]),
-                    html.Div(id='fc2', className="column has-text-centered", children=[
-                        html.Label('Cutoff Frequency (fc2)'),
-                        dcc.Input(id='fc2', placeholder='Enter a value', type='text', value='1000')
+                        html.Div(id='P2', className="column", children=[
+                            html.H1('Tank 2', className="has-text-centered is-size-4"),
+                            html.H4('SetPoint Tank 2', className="has-text-centered"),
+                            dcc.Slider(id='SPT2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            html.H4('Proportional (Kp2)', className="has-text-centered"),
+                            dcc.Slider(id='Kp2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            html.H4('Integral (Ki2)', className="has-text-centered"),
+                            dcc.Slider(id='Ki2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            html.H4('Derivative (Kd2)', className="has-text-centered"),
+                            dcc.Slider(id='Kd2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            html.H4('Anti wind-up (Kw2)', className="has-text-centered"),
+                            dcc.Slider(id='Kw2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            html.H4('Cutoff Frequency (fc2)', className="has-text-centered"),
+                            dcc.Slider(id='fc2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                     ])
                 ])
             ])
