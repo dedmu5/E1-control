@@ -17,6 +17,8 @@ from PID import G2_PID
 
 
 frecMax = 1 # En Hz
+Nmuestras = 100  # Valor por defecto para el tamaño del vector memoria
+guardando_activado = False
 directory = 'HistorialAplicacion'
 if not os.path.exists(directory):
         os.makedirs(directory)
@@ -40,6 +42,18 @@ class SubHandler(object): # Clase debe estar en el script porque el thread que c
         global eventoColor, eventoTexto
         eventoColor = event
         eventoTexto = event
+
+def guardar_datos(memoria, formato, directory, T_init):
+    T_str = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    T_init_str = T_init.strftime("%Y-%m-%d_%H-%M-%S")
+    memoria = pd.DataFrame(memoria)
+    memoria = memoria.set_index('time')
+    if formato == 'csv':
+        memoria.to_csv('{}/{}-{}.csv'.format(directory, T_init_str, T_str))
+    elif formato == 'json':
+        memoria.to_json('{}/{}-{}.json'.format(directory, T_init_str, T_str))
+    else:
+        memoria.to_pickle('{}/{}-{}.pkl'.format(directory, T_init_str, T_str))
 
 
 cliente = Cliente("opc.tcp://localhost:4840/freeopcua/server/", suscribir_eventos=True, SubHandler=SubHandler)
@@ -77,6 +91,10 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
 
             # Save section
             html.Div(id='GuardarDiv', className="has-text-centered", style={'paddingBottom': '30px'}, children=[
+                html.Div(id='InputMuestrasContainer', children=[
+                    html.Label('Number of Samples:', style={'color': colors['text']}),
+                    dcc.Input(id='NmuestrasInput', type='number', value=Nmuestras, min=1, style={'color': colors['text']})  # Input para Nmuestras
+                ]),
                 html.Button('Save Data', id='guardar', n_clicks=0, className="button is-primary"),
                 html.Button('Stop Saving', id='Noguardar', n_clicks=0, className="button is-danger"),
                 html.Div(id='indicativoGuardar', children=['Not Saving']),
@@ -238,21 +256,44 @@ def TextoAlarma(n):
 ################################################## Guardar ###########################################################
 nGuardar_ant = 0
 nNoGuardar_ant = 0
-@app.callback(Output('indicativoGuardar', 'children'), [Input('guardar', 'n_clicks'),Input('Noguardar', 'n_clicks')])
-def Guardar(nGuardar, nNoGuardar):
-    global nGuardar_ant, nNoGuardar_ant
+
+
+# @app.callback(Output('indicativoGuardar', 'children'), [Input('guardar', 'n_clicks'),Input('Noguardar', 'n_clicks')])
+# def Guardar(nGuardar, nNoGuardar):
+#     global nGuardar_ant, nNoGuardar_ant
+#     if nGuardar_ant != nGuardar:
+#         nGuardar_ant = nGuardar
+#         return 'Guardando'
+#     elif nNoGuardar_ant != nNoGuardar:
+#         return 'No Guardando'
+#     else:
+#         return 'No Guardando'
+
+
+@app.callback(
+    Output('indicativoGuardar', 'children'),
+    Output('InputMuestrasContainer', 'style'), # Ocultar el input
+    Output('NmuestrasInput', 'disabled'), # Deshabilitar el input
+    [Input('guardar', 'n_clicks'), Input('Noguardar', 'n_clicks')],
+    [State('NmuestrasInput', 'value')]
+)
+def Guardar(nGuardar, nNoGuardar, input_nmuestras):
+    global nGuardar_ant, nNoGuardar_ant, Nmuestras, guardando_activado
     if nGuardar_ant != nGuardar:
         nGuardar_ant = nGuardar
-        return 'Guardando'
+        Nmuestras = int(input_nmuestras)
+        guardando_activado = True
+        return 'Guardando', {'display': 'none'}, True
     elif nNoGuardar_ant != nNoGuardar:
-        return 'No Guardando'
+        nNoGuardar_ant = nNoGuardar
+        nGuardar_ant = 0 # Resetear nGuardar_ant
+        guardando_activado = False
+        return 'No Guardando', {'display': 'block'}, False
     else:
-        return 'No Guardando'
-
-
-
-
-
+        if guardando_activado:
+            return 'Guardando', {'display': 'none'}, True
+        else:
+            return 'No Guardando', {'display': 'block'}, False
 
 #################################################### Supervisión ######################################################
 # Se guardan los valores
@@ -401,7 +442,7 @@ T_init = 0
                 State('Razon1', 'value'), State('Razon2', 'value')])
 def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, manualFijo,
                       Kp1, Ki1, Kd1, Kw1, fc1, Kp2, Ki2, Kd2, Kw2, fc2, SPT1, SPT2, guardando, formato, razon1, razon2):
-    global times_list, v1_list, v2_list, t, pid1, pid2, memoria, T_init
+    global times_list, v1_list, v2_list, t, pid1, pid2, memoria, T_init, nGuardar_ant, nNoGuardar_ant, Nmuestras
     alturas = json.loads(alturas)
     T = datetime.datetime.now()
     v1 = v2 = 0
@@ -447,19 +488,15 @@ def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, ma
                  'v1': v1, 'v2': v2, 'modo': '{}'.format(eleccion), 'sp1': float(SPT1), 'sp2': float(SPT2),
                  'Ki1': float(Ki1),'Kd1': float(Kd1),'Kp1': float(Kp1),'Kw1': float(Kw1), 'fc1': float(fc1),
                  'Ki2': float(Ki2), 'Kd2': float(Kd2), 'Kp2': float(Kp2), 'Kw2': float(Kw2), 'fc2': float(fc2)})
+        if len(memoria) >= Nmuestras:
+            guardar_datos(memoria, formato, directory, T_init)
+            memoria = []
+            guardando = 'No Guardando' # Cambiar el estado a 'No Guardando'
+            nGuardar_ant = 0 # Reset para permitir nueva grabacion manual.
 
-    elif guardando == 'No Guardando' and memoria != []:
+    if (guardando == 'No Guardando' and memoria != []):
 
-        T_init_str = T_init.strftime("%Y-%m-%d_%H-%M-%S")
-        T_str = T.strftime("%Y-%m-%d_%H-%M-%S")
-        memoria = pd.DataFrame(memoria)
-        memoria = memoria.set_index('time')
-        if formato == 'csv':
-            memoria.to_csv('{}/{}-{}.csv'.format(directory, T_init_str, T_str))
-        elif formato == 'json':
-            memoria.to_json('{}/{}-{}.json'.format(directory, T_init_str, T_str))
-        else:
-            memoria.to_pickle('{}/{}-{}.pkl'.format(directory, T_init_str, T_str))
+        guardar_datos(memoria, formato, directory, T_init)
         memoria = []
 
 
