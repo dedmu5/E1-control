@@ -86,25 +86,19 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
                     {'label': '.pickle', 'value': 'pickle'}
                 ], value='csv', className="radio", style={'color': colors['text']})
             ]),
+            html.Br(),
+            # Alarm section
+            html.Div(id='AlarmaContainer', className="container", style={'backgroundColor': 'black', 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'color': colors['text']}, children=[
+                html.Div(id='Alarma', style={'backgroundColor': 'black', 'width': '80%', 'height': '70px', 'paddingTop':'25px', 'margin':'auto', 'border': '5px solid yellow', 'boxShadow': '0px 0px 20px 10px yellow'}, children=[
+                    html.H2(id='AlarmaTexto', className="title has-text-centered", style={'color': '#FFD700'}, children=['Alarm Inactive'])
+                ])
+            ]),
+            html.Br(),
 
             # Mode selection
             html.Div(id='Modo', className="container", style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': 'black'}, children=[
                 html.H4('Controller Mode', className="has-text-centered is-size-2"),
-                html.Div(id='EleccionDiv', className="control", children=[
-                dcc.RadioItems(id='Eleccion', options=[
-                    {'label': 'Manual Mode', 'value': 'Manual'},
-                    {'label': 'Automatic Mode', 'value': 'Automatico'}
-                ], value='Manual', className="radio", style={'color': colors['text']}),
-                    html.Div(id='MyDiv', className="has-text-centered is-size-4")
-                ])
-            ]),
-
-            # Modes section
-        html.Div(id='Modos', className="container",style={'color': colors['text'], 'backgroundColor': 'black'} , children=[
-                # Manual Mode
-                html.Div(id='Manual', className="container", style={'color': colors['text'], 'background-color': 'black', 'border': '2px solid gray'}, children=[
-                html.H3('Manual Mode', className="subtitle has-text-centered", style={'fontWeight': 'bold'}),
-                html.H4('Ratio Values', className="has-text-centered"),
+                html.H4('Ratio Values', className="has-text-centered is-size-4"),
                 html.Div(id='RazonesDiv', className="columns is-centered", children=[
                     html.Div(id='Razon1Div', className="column has-text-centered", children=[
                         html.Label('Ratio 1'),
@@ -115,90 +109,99 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
                         dcc.Slider(id='Razon2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                     ])
                 ]),
-                dcc.RadioItems(id='TipoManual', options=[
-                    {'label': 'Sine Wave', 'value': 'sinusoide'},
-                    {'label': 'Fixed Value', 'value': 'fijo'}
-                ], value='sinusoide', className="radio", style={'color': colors['text']}),
-
-                # Sine wave settings
-                html.H4('Sine Wave', className="has-text-centered"),
-                html.Div(id='Sliders1', className="columns is-centered", children=[
-                    html.Div(id='Frec', className="column has-text-centered", children=[
-                        html.Label('Freq'),
-                        dcc.Slider(id='FrecSlider', min=frecMax/25, max=frecMax/2, step=0.1, value=frecMax/4, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                    html.Div(id='EleccionDiv', className="control", children=[
+                    dcc.RadioItems(id='Eleccion', options=[
+                        {'label': 'Manual Mode', 'value': 'Manual'},
+                        {'label': 'Automatic Mode', 'value': 'Automatico'}
+                    ], value='Manual', className="radio", style={'color': colors['text']}),
+                        html.Div(id='MyDiv', className="has-text-centered is-size-4")
                     ]),
-                    html.Div(id='Amp', className="column has-text-centered", children=[
-                        html.Label('Amp'),
-                        dcc.Slider(id='AmpSlider', min=0.1, max=1, step=0.05, value=1, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
-                    ])
-                ]),
-                html.Div(id='Sliders2', className="columns is-centered", children=[
-                    html.Div(id='Fase', className="column has-text-centered", children=[
-                        html.Label('Phase'),
-                        dcc.Slider(id='FaseSlider', min=0, max=6.28, step=0.1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
-                    ]),
-                    html.Div(id='Offset', className="column has-text-centered", children=[
-                        html.Label('Offset'),
-                        dcc.Slider(id='OffsetSlider', min=-1, max=1, step=0.05, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
-                    ])
-                ]),
 
-                # Fixed value input
-                html.H4('Fixed Value', className="has-text-centered"),
-                html.Div(className="has-text-centered", children=[
-                    dcc.Input(id='ManualFijo', placeholder='Enter a value between -1 and 1 ...', type='text', value='0')
-                ])
+                        # Modes section
+                    html.Div(id='Modos', className="container",style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': 'black'} , children=[
+                            # Manual Mode
+                            html.Div(id='Manual', className="container", style={'color': colors['text'], 'background-color': 'black', 'border': '2px solid gray'}, children=[
+                            html.H4('Manual Mode', className="has-text-centered is-size-2"),
+                            dcc.RadioItems(id='TipoManual', options=[
+                                {'label': 'Sine Wave', 'value': 'sinusoide'},
+                                {'label': 'Fixed Value', 'value': 'fijo'}
+                            ], value='sinusoide', className="radio", style={'color': colors['text']}),
+
+                            # Sine wave settings
+                            html.Div(id='SineWaveDiv', className="columns is-centered", children=[
+                                html.H4('Sine Wave', className="has-text-centered is-size-4"),
+                                html.Div(id='Frec', className="column has-text-centered", children=[
+                                    html.Label('Freq'),
+                                    dcc.Slider(id='FrecSlider', min=frecMax/25, max=frecMax/2, step=0.1, value=frecMax/4, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                ]),
+                                html.Div(id='Amp', className="column has-text-centered", children=[
+                                    html.Label('Amp'),
+                                    dcc.Slider(id='AmpSlider', min=0.1, max=1, step=0.05, value=1, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                ]),
+                                html.Div(id='Fase', className="column has-text-centered", children=[
+                                    html.Label('Phase'),
+                                    dcc.Slider(id='FaseSlider', min=0, max=6.28, step=0.1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                ]),
+                                html.Div(id='Offset', className="column has-text-centered", children=[
+                                    html.Label('Offset'),
+                                    dcc.Slider(id='OffsetSlider', min=-1, max=1, step=0.05, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                ])
+                            ]),
+                            ]),
+                            html.Div(id='Sliders2', className="columns is-centered", children=[
+
+                            # Fixed value input
+                            html.H4('Fixed Value', className="has-text-centered is-size-4"),
+                            html.Div(className="has-text-centered", children=[
+                                dcc.Slider(id='ManualFijo', min=0.1, max=1, step=0.05, value=1, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                            ])
+                        ]),
+
+                        # Automatic Mode
+                        html.Div(id='Automatico', className="container", style={'color': colors['text'], 'background-color': 'black', 'border': '2px solid gray'}, children=[
+                            html.H4('PID Constants', className="has-text-centered is-size-2"),
+                            html.Div(id='constantes_controladores', className="columns is-centered", children=[
+                                    html.Div(id='P1', className="column", children=[
+                                        html.H4('Tank 1', className="has-text-centered is-size-4"),
+                                        html.H4('SetPoint Tank 1', className="has-text-centered"),
+                                        dcc.Slider(id='SPT1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        html.H4('Proportional (Kp1)', className="has-text-centered"),
+                                        dcc.Slider(id='Kp1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        html.H4('Integral (Ki1)', className="has-text-centered"),
+                                        dcc.Slider(id='Ki1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        html.H4('Derivative (Kd1)', className="has-text-centered"),
+                                        dcc.Slider(id='Kd1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        html.H4('Anti wind-up (Kw1)', className="has-text-centered"),
+                                        dcc.Slider(id='Kw1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        html.H4('Cutoff Frequency (fc1)', className="has-text-centered"),
+                                        dcc.Slider(id='fc1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                ]),
+                                    html.Div(id='P2', className="column", children=[
+                                        html.H1('Tank 2', className="has-text-centered is-size-4"),
+                                        html.H4('SetPoint Tank 2', className="has-text-centered"),
+                                        dcc.Slider(id='SPT2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        html.H4('Proportional (Kp2)', className="has-text-centered"),
+                                        dcc.Slider(id='Kp2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        html.H4('Integral (Ki2)', className="has-text-centered"),
+                                        dcc.Slider(id='Ki2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        html.H4('Derivative (Kd2)', className="has-text-centered"),
+                                        dcc.Slider(id='Kd2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        html.H4('Anti wind-up (Kw2)', className="has-text-centered"),
+                                        dcc.Slider(id='Kw2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        html.H4('Cutoff Frequency (fc2)', className="has-text-centered"),
+                                        dcc.Slider(id='fc2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                ])
+                            ])
+                        ])
+                    ]),
             ]),
+            html.Br(),
 
-            # Automatic Mode
-            html.Div(id='Automatico', className="container", style={'color': colors['text'], 'background-color': 'black', 'border': '2px solid gray'}, children=[
-                html.H4('PID Constants', className="has-text-centered is-size-2"),
-                html.Div(id='constantes_controladores', className="columns is-centered", children=[
-                        html.Div(id='P1', className="column", children=[
-                            html.H4('Tank 1', className="has-text-centered is-size-4"),
-                            html.H4('SetPoint Tank 1', className="has-text-centered"),
-                            dcc.Slider(id='SPT1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
-                            html.H4('Proportional (Kp1)', className="has-text-centered"),
-                            dcc.Slider(id='Kp1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
-                            html.H4('Integral (Ki1)', className="has-text-centered"),
-                            dcc.Slider(id='Ki1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
-                            html.H4('Derivative (Kd1)', className="has-text-centered"),
-                            dcc.Slider(id='Kd1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
-                            html.H4('Anti wind-up (Kw1)', className="has-text-centered"),
-                            dcc.Slider(id='Kw1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
-                            html.H4('Cutoff Frequency (fc1)', className="has-text-centered"),
-                            dcc.Slider(id='fc1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
-                    ]),
-                        html.Div(id='P2', className="column", children=[
-                            html.H1('Tank 2', className="has-text-centered is-size-4"),
-                            html.H4('SetPoint Tank 2', className="has-text-centered"),
-                            dcc.Slider(id='SPT2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
-                            html.H4('Proportional (Kp2)', className="has-text-centered"),
-                            dcc.Slider(id='Kp2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
-                            html.H4('Integral (Ki2)', className="has-text-centered"),
-                            dcc.Slider(id='Ki2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
-                            html.H4('Derivative (Kd2)', className="has-text-centered"),
-                            dcc.Slider(id='Kd2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
-                            html.H4('Anti wind-up (Kw2)', className="has-text-centered"),
-                            dcc.Slider(id='Kw2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
-                            html.H4('Cutoff Frequency (fc2)', className="has-text-centered"),
-                            dcc.Slider(id='fc2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
-                    ])
-                ])
-            ])
-        ]),
-
-        # Alarm section
-        html.Div(id='AlarmaContainer', className="container", style={'backgroundColor': 'black', 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'color': colors['text']}, children=[
-            html.Div(id='Alarma', style={'backgroundColor': 'black', 'width': '80%', 'height': '70px', 'paddingTop':'25px', 'margin':'auto', 'border': '5px solid yellow', 'boxShadow': '0px 0px 20px 10px yellow'}, children=[
-                html.H2(id='AlarmaTexto', className="title has-text-centered", style={'color': '#FFD700'}, children=['Alarm Inactive'])
-            ])
-        ])
     ])
 ])
 
 
-# Callback para alternar entre modos
+# Callback para alternar entre modos 
 @app.callback(
     [Output('Manual', 'style'), Output('Automatico', 'style')],
     [Input('Eleccion', 'value')]
@@ -207,6 +210,18 @@ def toggle_mode(mode):
     if mode == 'Manual':
         return {'display': 'block'}, {'display': 'none'}
     elif mode == 'Automatico':
+        return {'display': 'none'}, {'display': 'block'}
+    return {'display': 'none'}, {'display': 'none'}
+
+# Callback para alternar entre modos de control manual
+@app.callback(
+    [Output('SineWaveDiv', 'style'), Output('Sliders2', 'style')],
+    [Input('TipoManual', 'value')]
+)
+def toggle_manual_mode(mode):
+    if mode == 'sinusoide':
+        return {'display': 'block'}, {'display': 'none'}
+    elif mode == 'fijo':
         return {'display': 'none'}, {'display': 'block'}
     return {'display': 'none'}, {'display': 'none'}
 
