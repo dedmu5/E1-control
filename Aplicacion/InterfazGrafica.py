@@ -474,17 +474,21 @@ def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, ma
             memoria.append(
                 {'time': T, 'h1': alturas['h1'], 'h2': alturas['h2'], 'h3': alturas['h3'], 'h4': alturas['h4'],
                  'v1': v1, 'v2': v2, 'modo': '{}'.format(eleccion), 'sp1': float(SPT1), 'sp2': float(SPT2),
-                 'Ki': float(Ki),'Kd': float(Kd),'Kp': float(Kp),'Kw': float(Kw)})
+                 'Ki1': float(Ki1),'Kd1': float(Kd1),'Kp1': float(Kp1),'Kw1': float(Kw1), 'fc1': float(fc1),
+                 'Ki2': float(Ki2), 'Kd2': float(Kd2), 'Kp2': float(Kp2), 'Kw2': float(Kw2), 'fc2': float(fc2)})
 
     elif guardando == 'No Guardando' and memoria != []:
+
+        T_init_str = T_init.strftime("%Y-%m-%d_%H-%M-%S")
+        T_str = T.strftime("%Y-%m-%d_%H-%M-%S")
         memoria = pd.DataFrame(memoria)
         memoria = memoria.set_index('time')
         if formato == 'csv':
-            memoria.to_csv('{}/{}-{}.csv'.format(directory,T_init, T))
+            memoria.to_csv('{}/{}-{}.csv'.format(directory, T_init_str, T_str))
         elif formato == 'json':
-            memoria.to_json('{}/{}-{}.json'.format(directory,T_init, T))
+            memoria.to_json('{}/{}-{}.json'.format(directory, T_init_str, T_str))
         else:
-            memoria.to_pickle('{}/{}-{}.pkl'.format(directory,T_init, T))
+            memoria.to_pickle('{}/{}-{}.pkl'.format(directory, T_init_str, T_str))
         memoria = []
 
 
