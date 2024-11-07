@@ -109,12 +109,15 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
                         dcc.Slider(id='Razon2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                     ])
                 ]),
+                # border: 0px;
+                # width: 100%;
+                # height: 2em;
                     html.Div(id='EleccionDiv', className="control", children=[
-                    dcc.RadioItems(id='Eleccion', options=[
-                        {'label': 'Manual Mode', 'value': 'Manual'},
-                        {'label': 'Automatic Mode', 'value': 'Automatico'}
-                    ], value='Manual', className="radio", style={'color': colors['text']}),
-                        html.Div(id='MyDiv', className="has-text-centered is-size-4")
+                        dcc.RadioItems(id='Eleccion', options=[
+                            {'label': 'Manual Mode', 'value': 'Manual', 'className': 'radio'},
+                            {'label': 'Automatic Mode', 'value': 'Automatico', 'className': 'radio'}
+                        ], value='Manual', className="radio", style={'color': colors['text']}),
+                            html.Div(id='MyDiv', className="has-text-centered is-size-4")
                     ]),
 
                         # Modes section
