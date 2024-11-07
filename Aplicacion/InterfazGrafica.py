@@ -89,13 +89,13 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
 
             # Mode selection
             html.Div(id='Modo', className="container", style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': 'black'}, children=[
-                html.H2('Controller Mode', className="subtitle has-text-centered", style={'fontWeight': 'bold'}),
-                html.Div(id='EleccionDiv', className="container", children=[
+                html.H4('Controller Mode', className="has-text-centered is-size-2"),
+                html.Div(id='EleccionDiv', className="control", children=[
                 dcc.RadioItems(id='Eleccion', options=[
                     {'label': 'Manual Mode', 'value': 'Manual'},
                     {'label': 'Automatic Mode', 'value': 'Automatico'}
                 ], value='Manual', className="radio", style={'color': colors['text']}),
-                html.Div(id='MyDiv')
+                    html.Div(id='MyDiv', className="has-text-centered is-size-4")
                 ])
             ]),
 
@@ -108,7 +108,7 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
                 html.Div(id='RazonesDiv', className="columns is-centered", children=[
                     html.Div(id='Razon1Div', className="column has-text-centered", children=[
                         html.Label('Ratio 1'),
-                        dcc.Slider(id='Razon1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                        dcc.Slider(id='Razon1', min=0, max=1, step=0.01, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                     ]),
                     html.Div(id='Razon2Div', className="column has-text-centered", children=[
                         html.Label('Ratio 2'),
