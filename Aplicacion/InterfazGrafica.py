@@ -202,7 +202,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
                                         html.H4('Derivative (Kd1)', className="has-text-centered"),
                                         dcc.Slider(id='Kd1', min=0, max=100, step=0.5, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Anti wind-up (Kw1)', className="has-text-centered"),
-                                        dcc.Slider(id='Kw1', min=0, max=1000, step=0.1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='Kw1', min=0, max=10, step=0.1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Cutoff Frequency (fc1)', className="has-text-centered"),
                                         dcc.Slider(id='fc1', min=0, max=5000, step=1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                 ]),
@@ -217,7 +217,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
                                         html.H4('Derivative (Kd2)', className="has-text-centered"),
                                         dcc.Slider(id='Kd2', min=0, max=100, step=0.5, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Anti wind-up (Kw2)', className="has-text-centered"),
-                                        dcc.Slider(id='Kw2', min=0, max=1000, step=0.1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='Kw2', min=0, max=10, step=0.1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Cutoff Frequency (fc2)', className="has-text-centered"),
                                         dcc.Slider(id='fc2', min=0, max=5000, step=1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                                 ])
