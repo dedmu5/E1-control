@@ -93,7 +93,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
             html.Div(id='GuardarDiv', className="has-text-centered", style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': 'black'}, children=[
                 html.H4('Save data', className="has-text-centered is-size-2"),
                 html.Div(id='InputMuestrasContainer', children=[
-                    html.H4('Number of Samples', className="has-text-centered is-size-4", style={'color': colors['text']}),
+                    html.H4('Number of Samples', className="has-text-centered is-size-4", style={'color': ['text']}),
                     dcc.Input(id='NmuestrasInput', type='number', value=Nmuestras, min=1)
                 ]),
                 html.Br(),
@@ -495,8 +495,8 @@ def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, ma
     # Modo automático
     elif eleccion == 'Automatico':
         # SetPoints
-        pid1.set_setPoint(float(SPT1))
-        pid2.set_setPoint(float(SPT2))
+        pid1.setPoint = float(SPT1)
+        pid2.setPoint = float(SPT2)
 
         # Constantes
         pid1.set_PID_param(float(Kp1), float(Ki1), float(Kd1), float(fc1), float(Kw1))
