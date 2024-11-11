@@ -222,32 +222,32 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
 ])
 
 
-# app.index_string = '''
-# <!DOCTYPE html>
-# <html>
-#     <head>
-#         {%metas%}
-#         <title>Centro de control del Grupo 2</title>
-#         {%favicon%}
-#         {%css%}
-#         <style>
-#             html, body {
-#                 background-color: #111111;
-#                 margin: 0;
-#                 height: 100%;
-#             }
-#         </style>
-#     </head>
-#     <body>
-#         {%app_entry%}
-#         <footer>
-#             {%config%}
-#             {%scripts%}
-#             {%renderer%}
-#         </footer>
-#     </body>
-# </html>
-# '''
+app.index_string = '''
+<!DOCTYPE html>
+<html>
+    <head>
+        {%metas%}
+        <title>Centro de control del Grupo 2</title>
+        {%favicon%}
+        {%css%}
+        <style>
+            html, body {
+                background-color: black;
+                margin: 0;
+                height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        {%app_entry%}
+        <footer>
+            {%config%}
+            {%scripts%}
+            {%renderer%}
+        </footer>
+    </body>
+</html>
+'''
 
 
 # Callback para alternar entre modos 
