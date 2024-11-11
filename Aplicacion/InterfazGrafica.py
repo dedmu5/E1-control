@@ -92,17 +92,21 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
             # Save section
             html.Div(id='GuardarDiv', className="has-text-centered", style={'paddingBottom': '30px'}, children=[
                 html.Div(id='InputMuestrasContainer', children=[
-                    html.Label('Number of Samples:', style={'color': colors['text']}),
-                    dcc.Input(id='NmuestrasInput', type='number', value=Nmuestras, min=1, style={'color': colors['text']})
+                    html.H4('Number of Samples', className="has-text-centered is-size-4", style={'color': colors['text']}),
+                    dcc.Input(id='NmuestrasInput', type='number', value=Nmuestras, min=1)
                 ]),
-                html.Button('Save Data', id='guardar', n_clicks=0, className="button is-primary"),
-                html.Button('Stop Saving', id='Noguardar', n_clicks=0, className="button is-danger"),
-                html.Div(id='indicativoGuardar', children=['Not Saving']),
                 dcc.RadioItems(id='Formato', options=[
-                    {'label': '.csv', 'value': 'csv'},
-                    {'label': '.json', 'value': 'json'},
-                    {'label': '.pickle', 'value': 'pickle'}
-                ], value='csv', className="radio", style={'color': colors['text']})
+                    {'label': '.csv ', 'value': 'csv'},
+                    {'label': '.json ', 'value': 'json'},
+                    {'label': '.pickle ', 'value': 'pickle'}
+                ], value='csv', className="radio", style={'color': colors['text']}),
+                html.Br(),
+                html.Br(),
+                html.Div(id='GuardarContainer', className="columns is-centered", children=[
+                html.Button('Save Data', id='guardar', n_clicks=0, className="column button is-primary"),
+                html.Button('Stop Saving', id='Noguardar', n_clicks=0, className="column button is-danger"),
+                ]),
+                html.Div(id='indicativoGuardar', children=['Not Saving'], className="has-text-centered is-size-4")
             ]),
             html.Br(),
             # Alarm section
@@ -189,7 +193,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
                                         html.H4('Proportional (Kp1)', className="has-text-centered"),
                                         dcc.Slider(id='Kp1', min=0, max=100, step=0.5, value=1, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Integral (Ki1)', className="has-text-centered"),
-                                        dcc.Slider(id='Ki1', min=0, max=100, step=0.5, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='Ki1', min=0, max=10, step=0.1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Derivative (Kd1)', className="has-text-centered"),
                                         dcc.Slider(id='Kd1', min=0, max=100, step=0.5, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Anti wind-up (Kw1)', className="has-text-centered"),
@@ -204,7 +208,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
                                         html.H4('Proportional (Kp2)', className="has-text-centered"),
                                         dcc.Slider(id='Kp2', min=0, max=100, step=0.5, value=1, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Integral (Ki2)', className="has-text-centered"),
-                                        dcc.Slider(id='Ki2', min=0, max=100, step=0.5, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='Ki2', min=0, max=10, step=0.1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Derivative (Kd2)', className="has-text-centered"),
                                         dcc.Slider(id='Kd2', min=0, max=100, step=0.5, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Anti wind-up (Kw2)', className="has-text-centered"),
