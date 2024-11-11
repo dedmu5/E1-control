@@ -506,7 +506,7 @@ def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, ma
         v2 = pid2.update(alturas['h2'])
 
     # Guardando
-    if guardando == 'Guardando':
+    if guardando == 'Saving...':
         if memoria == []:
             T_init = datetime.datetime.now()
 
@@ -522,7 +522,7 @@ def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, ma
         # if len(memoria) > Nmuestras:
         #     guardar_datos(memoria, formato, directory, T_init)
 
-    if (guardando == 'No Guardando' and memoria != []):
+    if (guardando == 'Not Saving' and memoria != []):
 
         guardar_datos(memoria, formato, directory, T_init)
         memoria = []
