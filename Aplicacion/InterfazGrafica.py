@@ -62,6 +62,7 @@ cliente.conectar()
 # Aplicación con Dash
 colors = {
     'background': '#111111',
+    'background-section': '#2B2B2B',
     'text': '#FFD700'
 }
 
@@ -71,7 +72,7 @@ frecMax = 1
 
 
 app.layout = html.Div(style={'backgroundColor': colors['background']}, className="container", children=[
-    html.Section(className="section", style={'backgroundColor': 'black'}, children=[
+    html.Section(className="section", style={'backgroundColor': colors['background']}, children=[
         html.H1('Control Center', className="title has-text-centered", style={'color': colors['text']}),
 
         # Interval component
@@ -79,6 +80,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
         
         # Live update text
         html.Div(id='live-update-text1', className="has-text-centered", style={'color': colors['text']}),
+        html.Br(),
 
         # First live update graph
         dcc.Graph(id='live-update-graph1'),
@@ -90,7 +92,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
             dcc.Graph(id='live-update-graph2'),
 
             # Save section
-            html.Div(id='GuardarDiv', className="has-text-centered", style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': 'black'}, children=[
+            html.Div(id='GuardarDiv', className="has-text-centered", style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': colors['background-section']}, children=[
                 html.H4('Save data', className="has-text-centered is-size-2"),
                 html.Div(id='InputMuestrasContainer', children=[
                     html.H4('Number of Samples', className="has-text-centered is-size-4", style={'color': ['text']}),
@@ -112,7 +114,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
             ]),
             html.Br(),
             # Alarm section
-            html.Div(id='AlarmaContainer', className="container", style={'backgroundColor': 'black', 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'color': colors['text']}, children=[
+            html.Div(id='AlarmaContainer', className="container", style={'backgroundColor': colors['background-section'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'color': colors['text']}, children=[
                 html.H4('Alarm', className="has-text-centered is-size-2"),
                 html.Div(id='Alarma', style={'backgroundColor': 'black'}, children=[
                     html.H2(id='AlarmaTexto', className="title has-text-centered", style={'color': '#FFD700'}, children=['Alarm Inactive'])
@@ -121,7 +123,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
             html.Br(),
 
             # Mode selection
-            html.Div(id='Modo', className="container", style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': 'black'}, children=[
+            html.Div(id='Modo', className="container", style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': colors['background-section']}, children=[
                 html.H4('Controller Mode', className="has-text-centered is-size-2"),
                 html.Br(),
                 html.H4('Ratio Values', className="has-text-centered is-size-4"),
@@ -147,7 +149,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
                     ]),
 
                         # Modes section
-                    html.Div(id='Modos', className="container",style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': 'black'} , children=[
+                    html.Div(id='Modos', className="container",style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': colors['background-section']} , children=[
                             # Manual Mode
                             html.Div(id='Manual', className="container", style={'color': colors['text'], 'background-color': 'black', 'border': '2px solid gray'}, children=[
                             html.H4('Manual Mode', className="has-text-centered is-size-2"),
@@ -241,7 +243,7 @@ app.index_string = '''
         {%css%}
         <style>
             html, body {
-                background-color: black;
+                background-color: #111111;
                 margin: 0;
                 height: 100%;
             }
@@ -342,7 +344,7 @@ def UpdateInfo(n):
 @app.callback(Output('live-update-text1', 'children'), [Input('intermediate', 'children')])
 def UpdateText(alturas):
     alturas = json.loads(alturas)
-    style = {'padding': '5px', 'fontSize': '16px', 'border': '2px solid powderblue'}
+    style = {'padding': '15px', 'fontSize': '20px', 'border': '2px solid powderblue', 'backgroundColor': colors['background-section']}
     return [
         html.Span('Tank 1: {}'.format(round(alturas['h1'], 2)), style=style),
         html.Span('Tank 2: {}'.format(round(alturas['h2'], 2)), style=style),
