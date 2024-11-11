@@ -120,11 +120,11 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
                 html.Div(id='RazonesDiv', className="columns is-centered", children=[
                     html.Div(id='Razon1Div', className="column has-text-centered", children=[
                         html.Label('Ratio 1'),
-                        dcc.Slider(id='Razon1', min=0, max=100, step=0.5, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                        dcc.Slider(id='Razon1', min=0, max=1, step=0.05, value=0.5, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                     ]),
                     html.Div(id='Razon2Div', className="column has-text-centered", children=[
                         html.Label('Ratio 2'),
-                        dcc.Slider(id='Razon2', min=0, max=100, step=0.5, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                        dcc.Slider(id='Razon2', min=0, max=1, step=0.05, value=0.5, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                     ])
                 ]),
                 # border: 0px;
@@ -144,9 +144,9 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
                             html.Div(id='Manual', className="container", style={'color': colors['text'], 'background-color': 'black', 'border': '2px solid gray'}, children=[
                             html.H4('Manual Mode', className="has-text-centered is-size-2"),
                             dcc.RadioItems(id='TipoManual', options=[
-                                {'label': 'Sine Wave', 'value': 'sinusoide'},
-                                {'label': 'Fixed Value', 'value': 'fijo'}
-                            ], value='sinusoide', className="radio", style={'color': colors['text']}),
+                                {'label': 'Fixed Value', 'value': 'fijo'},
+                                {'label': 'Sine Wave', 'value': 'sinusoide'}
+                            ], value='fijo', className="radio", style={'color': colors['text']}),
 
                             # Sine wave settings
                             html.Div(id='SineWaveDiv', className="columns is-centered", children=[
