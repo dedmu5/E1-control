@@ -120,11 +120,11 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
                 html.Div(id='RazonesDiv', className="columns is-centered", children=[
                     html.Div(id='Razon1Div', className="column has-text-centered", children=[
                         html.Label('Ratio 1'),
-                        dcc.Slider(id='Razon1', min=0, max=1, step=0.01, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                        dcc.Slider(id='Razon1', min=0, max=100, step=0.5, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                     ]),
                     html.Div(id='Razon2Div', className="column has-text-centered", children=[
                         html.Label('Ratio 2'),
-                        dcc.Slider(id='Razon2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                        dcc.Slider(id='Razon2', min=0, max=100, step=0.5, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                     ])
                 ]),
                 # border: 0px;
@@ -153,19 +153,19 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
                                 html.H4('Sine Wave', className="has-text-centered is-size-4"),
                                 html.Div(id='Frec', className="column has-text-centered", children=[
                                     html.Label('Freq'),
-                                    dcc.Slider(id='FrecSlider', min=frecMax/25, max=frecMax/2, step=0.1, value=frecMax/4, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                    dcc.Slider(id='FrecSlider', min=frecMax/25, max=frecMax/2, step=0.5, value=frecMax/4, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                                 ]),
                                 html.Div(id='Amp', className="column has-text-centered", children=[
                                     html.Label('Amp'),
-                                    dcc.Slider(id='AmpSlider', min=0.1, max=1, step=0.05, value=1, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                    dcc.Slider(id='AmpSlider', min=0.1, max=1, step=0.5, value=1, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                                 ]),
                                 html.Div(id='Fase', className="column has-text-centered", children=[
                                     html.Label('Phase'),
-                                    dcc.Slider(id='FaseSlider', min=0, max=6.28, step=0.1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                    dcc.Slider(id='FaseSlider', min=0, max=6.28, step=0.5, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                                 ]),
                                 html.Div(id='Offset', className="column has-text-centered", children=[
                                     html.Label('Offset'),
-                                    dcc.Slider(id='OffsetSlider', min=-1, max=1, step=0.05, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                    dcc.Slider(id='OffsetSlider', min=-1, max=1, step=0.5, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                                 ])
                             ]),
                             ]),
@@ -174,7 +174,7 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
                             # Fixed value input
                             html.H4('Fixed Value', className="has-text-centered is-size-4"),
                             html.Div(className="has-text-centered", children=[
-                                dcc.Slider(id='ManualFijo', min=0.1, max=1, step=0.05, value=1, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                dcc.Slider(id='ManualFijo', min=0.1, max=1, step=0.5, value=1, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                             ])
                         ]),
 
@@ -185,32 +185,32 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
                                     html.Div(id='P1', className="column", children=[
                                         html.H4('Tank 1', className="has-text-centered is-size-4"),
                                         html.H4('SetPoint Tank 1', className="has-text-centered"),
-                                        dcc.Slider(id='SPT1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='SPT1', min=0, max=100, step=0.5, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Proportional (Kp1)', className="has-text-centered"),
-                                        dcc.Slider(id='Kp1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='Kp1', min=0, max=100, step=0.5, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Integral (Ki1)', className="has-text-centered"),
-                                        dcc.Slider(id='Ki1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='Ki1', min=0, max=100, step=0.5, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Derivative (Kd1)', className="has-text-centered"),
-                                        dcc.Slider(id='Kd1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='Kd1', min=0, max=100, step=0.5, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Anti wind-up (Kw1)', className="has-text-centered"),
-                                        dcc.Slider(id='Kw1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='Kw1', min=0, max=100, step=0.01, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Cutoff Frequency (fc1)', className="has-text-centered"),
-                                        dcc.Slider(id='fc1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='fc1', min=0, max=10000, step=0.5, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                 ]),
                                     html.Div(id='P2', className="column", children=[
                                         html.H1('Tank 2', className="has-text-centered is-size-4"),
                                         html.H4('SetPoint Tank 2', className="has-text-centered"),
-                                        dcc.Slider(id='SPT2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='SPT2', min=0, max=100, step=0.5, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Proportional (Kp2)', className="has-text-centered"),
-                                        dcc.Slider(id='Kp2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='Kp2', min=0, max=100, step=0.5, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Integral (Ki2)', className="has-text-centered"),
-                                        dcc.Slider(id='Ki2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='Ki2', min=0, max=100, step=0.5, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Derivative (Kd2)', className="has-text-centered"),
-                                        dcc.Slider(id='Kd2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='Kd2', min=0, max=100, step=0.5, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Anti wind-up (Kw2)', className="has-text-centered"),
-                                        dcc.Slider(id='Kw2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='Kw2', min=0, max=10000, step=0.01, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Cutoff Frequency (fc2)', className="has-text-centered"),
-                                        dcc.Slider(id='fc2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                        dcc.Slider(id='fc2', min=0, max=10000, step=0.5, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                                 ])
                             ])
                         ])
