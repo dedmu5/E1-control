@@ -70,7 +70,7 @@ app = dash.Dash(external_stylesheets=["https://cdnjs.cloudflare.com/ajax/libs/bu
 frecMax = 1
 
 
-app.layout = html.Div(style={'backgroundColor': 'black'}, className="container", children=[
+app.layout = html.Div(style={'backgroundColor': colors['background']}, className="container", children=[
     html.Section(className="section", style={'backgroundColor': 'black'}, children=[
         html.H1('Centro de control del Grupo 2', className="title has-text-centered", style={'color': colors['text']}),
 
@@ -174,7 +174,7 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
                             # Fixed value input
                             html.H4('Fixed Value', className="has-text-centered is-size-4"),
                             html.Div(className="has-text-centered", children=[
-                                dcc.Slider(id='ManualFijo', min=0.1, max=1, step=0.5, value=1, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                dcc.Slider(id='ManualFijo', min=0.1, max=1, step=0.01, value=1, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                             ])
                         ]),
 
