@@ -18,7 +18,7 @@ from PID import G2_PID
 
 frecMax = 1 # En Hz
 Nmuestras = 100  # Valor por defecto para el tamaño del vector memoria
-guardando_activado = False
+
 directory = 'HistorialAplicacion'
 if not os.path.exists(directory):
         os.makedirs(directory)
@@ -93,7 +93,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
             html.Div(id='GuardarDiv', className="has-text-centered", style={'paddingBottom': '30px'}, children=[
                 html.Div(id='InputMuestrasContainer', children=[
                     html.Label('Number of Samples:', style={'color': colors['text']}),
-                    dcc.Input(id='NmuestrasInput', type='number', value=Nmuestras, min=1, style={'color': colors['text']})  # Input para Nmuestras
+                    dcc.Input(id='NmuestrasInput', type='number', value=Nmuestras, min=1, style={'color': colors['text']})
                 ]),
                 html.Button('Save Data', id='guardar', n_clicks=0, className="button is-primary"),
                 html.Button('Stop Saving', id='Noguardar', n_clicks=0, className="button is-danger"),
@@ -276,42 +276,20 @@ nGuardar_ant = 0
 nNoGuardar_ant = 0
 
 
-# @app.callback(Output('indicativoGuardar', 'children'), [Input('guardar', 'n_clicks'),Input('Noguardar', 'n_clicks')])
-# def Guardar(nGuardar, nNoGuardar):
-#     global nGuardar_ant, nNoGuardar_ant
-#     if nGuardar_ant != nGuardar:
-#         nGuardar_ant = nGuardar
-#         return 'Guardando'
-#     elif nNoGuardar_ant != nNoGuardar:
-#         return 'No Guardando'
-#     else:
-#         return 'No Guardando'
+@app.callback(Output('indicativoGuardar', 'children'), [Input('guardar', 'n_clicks'),Input('Noguardar', 'n_clicks')])
+def Guardar(nGuardar, nNoGuardar):
+    global nGuardar_ant, nNoGuardar_ant
 
-
-@app.callback(
-    Output('indicativoGuardar', 'children'),
-    Output('InputMuestrasContainer', 'style'), # Ocultar el input
-    Output('NmuestrasInput', 'disabled'), # Deshabilitar el input
-    [Input('guardar', 'n_clicks'), Input('Noguardar', 'n_clicks')],
-    [State('NmuestrasInput', 'value')]
-)
-def Guardar(nGuardar, nNoGuardar, input_nmuestras):
-    global nGuardar_ant, nNoGuardar_ant, Nmuestras, guardando_activado
     if nGuardar_ant != nGuardar:
         nGuardar_ant = nGuardar
-        Nmuestras = int(input_nmuestras)
-        guardando_activado = True
-        return 'Guardando', {'display': 'none'}, True
+        return 'Guardando'
     elif nNoGuardar_ant != nNoGuardar:
-        nNoGuardar_ant = nNoGuardar
-        nGuardar_ant = 0 # Resetear nGuardar_ant
-        guardando_activado = False
-        return 'No Guardando', {'display': 'block'}, False
+        return 'No Guardando'
     else:
-        if guardando_activado:
-            return 'Guardando', {'display': 'none'}, True
-        else:
-            return 'No Guardando', {'display': 'block'}, False
+        return 'No Guardando'
+
+
+
 
 #################################################### Supervisión ######################################################
 # Se guardan los valores
@@ -499,23 +477,22 @@ def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, ma
 
         if eleccion == 'Manual':
             memoria.append({'time':T,'h1': alturas['h1'], 'h2': alturas['h2'], 'h3': alturas['h3'], 'h4': alturas['h4'],
-                            'v1': v1, 'v2':v2, 'modo': '{}-{}'.format(eleccion, tipoManual)})
+                            'v1': v1, 'v2':v2, 'modo': '{}-{}'.format(eleccion, tipoManual), 'razon1': float(razon1), 'razon2': float(razon2)})
         else:
             memoria.append(
                 {'time': T, 'h1': alturas['h1'], 'h2': alturas['h2'], 'h3': alturas['h3'], 'h4': alturas['h4'],
                  'v1': v1, 'v2': v2, 'modo': '{}'.format(eleccion), 'sp1': float(SPT1), 'sp2': float(SPT2),
                  'Ki1': float(Ki1),'Kd1': float(Kd1),'Kp1': float(Kp1),'Kw1': float(Kw1), 'fc1': float(fc1),
-                 'Ki2': float(Ki2), 'Kd2': float(Kd2), 'Kp2': float(Kp2), 'Kw2': float(Kw2), 'fc2': float(fc2)})
-        if len(memoria) >= Nmuestras:
-            guardar_datos(memoria, formato, directory, T_init)
-            memoria = []
-            guardando = 'No Guardando' # Cambiar el estado a 'No Guardando'
-            nGuardar_ant = 0 # Reset para permitir nueva grabacion manual.
+                 'Ki2': float(Ki2), 'Kd2': float(Kd2), 'Kp2': float(Kp2), 'Kw2': float(Kw2), 'fc2': float(fc2), 'razon1': float(razon1), 'razon2': float(razon2)})
+        # if len(memoria) > Nmuestras:
+        #     guardar_datos(memoria, formato, directory, T_init)
 
     if (guardando == 'No Guardando' and memoria != []):
 
         guardar_datos(memoria, formato, directory, T_init)
         memoria = []
+        
+
 
 
     cliente.valvulas['valvula1'].set_value(v1)
