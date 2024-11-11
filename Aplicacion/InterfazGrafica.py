@@ -18,7 +18,7 @@ from PID import G2_PID
 
 frecMax = 1 # En Hz
 Nmuestras = 100  # Valor por defecto para el tamaño del vector memoria
-guardando_activado = False
+
 directory = 'HistorialAplicacion'
 if not os.path.exists(directory):
         os.makedirs(directory)
@@ -93,7 +93,8 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
             html.Div(id='GuardarDiv', className="has-text-centered", style={'paddingBottom': '30px'}, children=[
                 html.Div(id='InputMuestrasContainer', children=[
                     html.Label('Number of Samples:', style={'color': colors['text']}),
-                    dcc.Input(id='NmuestrasInput', type='number', value=Nmuestras, min=1, style={'color': colors['text']})  # Input para Nmuestras
+                    dcc.Input(id='NmuestrasInput', type='number', value=Nmuestras, min=1, style={'color': colors['text']}),
+                    dcc.Store(id='estado-guardado', data={"message": "No se esta guardando"})
                 ]),
                 html.Button('Save Data', id='guardar', n_clicks=0, className="button is-primary"),
                 html.Button('Stop Saving', id='Noguardar', n_clicks=0, className="button is-danger"),
@@ -175,32 +176,32 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
                         html.Div(id='P1', className="column", children=[
                             html.H4('Tank 1', className="has-text-centered is-size-4"),
                             html.H4('SetPoint Tank 1', className="has-text-centered"),
-                            dcc.Slider(id='SPT1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            dcc.Slider(id='SPT1', min=0, max=100, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                             html.H4('Proportional (Kp1)', className="has-text-centered"),
-                            dcc.Slider(id='Kp1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            dcc.Slider(id='Kp1', min=0, max=1000, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                             html.H4('Integral (Ki1)', className="has-text-centered"),
-                            dcc.Slider(id='Ki1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            dcc.Slider(id='Ki1', min=0, max=1000, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                             html.H4('Derivative (Kd1)', className="has-text-centered"),
-                            dcc.Slider(id='Kd1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            dcc.Slider(id='Kd1', min=0, max=1000, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                             html.H4('Anti wind-up (Kw1)', className="has-text-centered"),
-                            dcc.Slider(id='Kw1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            dcc.Slider(id='Kw1', min=0, max=1000, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                             html.H4('Cutoff Frequency (fc1)', className="has-text-centered"),
-                            dcc.Slider(id='fc1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            dcc.Slider(id='fc1', min=0, max=1000, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                     ]),
                         html.Div(id='P2', className="column", children=[
                             html.H1('Tank 2', className="has-text-centered is-size-4"),
                             html.H4('SetPoint Tank 2', className="has-text-centered"),
-                            dcc.Slider(id='SPT2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            dcc.Slider(id='SPT2', min=0, max=100, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                             html.H4('Proportional (Kp2)', className="has-text-centered"),
-                            dcc.Slider(id='Kp2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            dcc.Slider(id='Kp2', min=0, max=1000, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                             html.H4('Integral (Ki2)', className="has-text-centered"),
-                            dcc.Slider(id='Ki2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            dcc.Slider(id='Ki2', min=0, max=1000, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                             html.H4('Derivative (Kd2)', className="has-text-centered"),
-                            dcc.Slider(id='Kd2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            dcc.Slider(id='Kd2', min=0, max=1000, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                             html.H4('Anti wind-up (Kw2)', className="has-text-centered"),
-                            dcc.Slider(id='Kw2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                            dcc.Slider(id='Kw2', min=0, max=1000, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                             html.H4('Cutoff Frequency (fc2)', className="has-text-centered"),
-                            dcc.Slider(id='fc2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                            dcc.Slider(id='fc2', min=0, max=1000, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                     ])
                 ])
             ])
@@ -258,42 +259,21 @@ nGuardar_ant = 0
 nNoGuardar_ant = 0
 
 
-# @app.callback(Output('indicativoGuardar', 'children'), [Input('guardar', 'n_clicks'),Input('Noguardar', 'n_clicks')])
-# def Guardar(nGuardar, nNoGuardar):
-#     global nGuardar_ant, nNoGuardar_ant
-#     if nGuardar_ant != nGuardar:
-#         nGuardar_ant = nGuardar
-#         return 'Guardando'
-#     elif nNoGuardar_ant != nNoGuardar:
-#         return 'No Guardando'
-#     else:
-#         return 'No Guardando'
-
-
-@app.callback(
-    Output('indicativoGuardar', 'children'),
-    Output('InputMuestrasContainer', 'style'), # Ocultar el input
-    Output('NmuestrasInput', 'disabled'), # Deshabilitar el input
-    [Input('guardar', 'n_clicks'), Input('Noguardar', 'n_clicks')],
-    [State('NmuestrasInput', 'value')]
-)
-def Guardar(nGuardar, nNoGuardar, input_nmuestras):
-    global nGuardar_ant, nNoGuardar_ant, Nmuestras, guardando_activado
+@app.callback(Output('indicativoGuardar', 'children'), [Input('guardar', 'n_clicks'),Input('Noguardar', 'n_clicks'), Input('estado-guardado', 'data')])
+def Guardar(nGuardar, nNoGuardar, data):
+    global nGuardar_ant, nNoGuardar_ant
+    if data['message'] == 'Guardando':
+        pass
+    elif data['message'] == 'No se esta guardando':
+        return 'No Guardando'
     if nGuardar_ant != nGuardar:
         nGuardar_ant = nGuardar
-        Nmuestras = int(input_nmuestras)
-        guardando_activado = True
-        return 'Guardando', {'display': 'none'}, True
+        return 'Guardando'
     elif nNoGuardar_ant != nNoGuardar:
-        nNoGuardar_ant = nNoGuardar
-        nGuardar_ant = 0 # Resetear nGuardar_ant
-        guardando_activado = False
-        return 'No Guardando', {'display': 'block'}, False
+        return 'No Guardando'
     else:
-        if guardando_activado:
-            return 'Guardando', {'display': 'none'}, True
-        else:
-            return 'No Guardando', {'display': 'block'}, False
+        return 'No Guardando'
+
 
 #################################################### Supervisión ######################################################
 # Se guardan los valores
@@ -428,7 +408,7 @@ t = 0
 memoria = []
 T_init = 0
 
-@app.callback(Output('live-update-graph2', 'figure'),
+@app.callback([Output('live-update-graph2', 'figure'), Output('estado-guardado', 'data')],
               [Input('intermediate', 'children')],
               [State('Eleccion', 'value'), State('TipoManual', 'value'),
                 State('FrecSlider', 'value'),State('AmpSlider', 'value'),
@@ -443,6 +423,7 @@ T_init = 0
 def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, manualFijo,
                       Kp1, Ki1, Kd1, Kw1, fc1, Kp2, Ki2, Kd2, Kw2, fc2, SPT1, SPT2, guardando, formato, razon1, razon2):
     global times_list, v1_list, v2_list, t, pid1, pid2, memoria, T_init, nGuardar_ant, nNoGuardar_ant, Nmuestras
+    se_esta_guardando = True if guardando == 'Guardando' else False
     alturas = json.loads(alturas)
     T = datetime.datetime.now()
     v1 = v2 = 0
@@ -481,23 +462,26 @@ def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, ma
 
         if eleccion == 'Manual':
             memoria.append({'time':T,'h1': alturas['h1'], 'h2': alturas['h2'], 'h3': alturas['h3'], 'h4': alturas['h4'],
-                            'v1': v1, 'v2':v2, 'modo': '{}-{}'.format(eleccion, tipoManual)})
+                            'v1': v1, 'v2':v2, 'modo': '{}-{}'.format(eleccion, tipoManual), 'razon1': float(razon1), 'razon2': float(razon2)})
         else:
             memoria.append(
                 {'time': T, 'h1': alturas['h1'], 'h2': alturas['h2'], 'h3': alturas['h3'], 'h4': alturas['h4'],
                  'v1': v1, 'v2': v2, 'modo': '{}'.format(eleccion), 'sp1': float(SPT1), 'sp2': float(SPT2),
                  'Ki1': float(Ki1),'Kd1': float(Kd1),'Kp1': float(Kp1),'Kw1': float(Kw1), 'fc1': float(fc1),
-                 'Ki2': float(Ki2), 'Kd2': float(Kd2), 'Kp2': float(Kp2), 'Kw2': float(Kw2), 'fc2': float(fc2)})
+                 'Ki2': float(Ki2), 'Kd2': float(Kd2), 'Kp2': float(Kp2), 'Kw2': float(Kw2), 'fc2': float(fc2), 'razon1': float(razon1), 'razon2': float(razon2)})
+            
         if len(memoria) >= Nmuestras:
-            guardar_datos(memoria, formato, directory, T_init)
-            memoria = []
-            guardando = 'No Guardando' # Cambiar el estado a 'No Guardando'
-            nGuardar_ant = 0 # Reset para permitir nueva grabacion manual.
+            se_esta_guardando = False
+
+
 
     if (guardando == 'No Guardando' and memoria != []):
 
         guardar_datos(memoria, formato, directory, T_init)
         memoria = []
+        
+
+    output_guardado = {"message": "Guardando"} if se_esta_guardando else {"message": "No se esta guardando"}
 
 
     cliente.valvulas['valvula1'].set_value(v1)
@@ -524,7 +508,7 @@ def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, ma
     fig.append_trace(plot1, 1, 1)
     fig.append_trace(plot2, 1, 2)
 
-    return fig
+    return fig, output_guardado
 
 
 app.run_server()
