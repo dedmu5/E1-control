@@ -174,7 +174,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
                             # Fixed value input
                             html.H4('Fixed Value', className="has-text-centered is-size-4"),
                             html.Div(className="has-text-centered", children=[
-                                dcc.Slider(id='ManualFijo', min=0.1, max=1, step=0.01, value=1, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                dcc.Slider(id='ManualFijo', min=0.1, max=1, step=0.01, value=0.3, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                             ])
                         ]),
 
@@ -220,6 +220,34 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
 
     ])
 ])
+
+
+# app.index_string = '''
+# <!DOCTYPE html>
+# <html>
+#     <head>
+#         {%metas%}
+#         <title>Centro de control del Grupo 2</title>
+#         {%favicon%}
+#         {%css%}
+#         <style>
+#             html, body {
+#                 background-color: #111111;
+#                 margin: 0;
+#                 height: 100%;
+#             }
+#         </style>
+#     </head>
+#     <body>
+#         {%app_entry%}
+#         <footer>
+#             {%config%}
+#             {%scripts%}
+#             {%renderer%}
+#         </footer>
+#     </body>
+# </html>
+# '''
 
 
 # Callback para alternar entre modos 
