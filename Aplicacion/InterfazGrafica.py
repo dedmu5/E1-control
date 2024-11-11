@@ -93,8 +93,7 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
             html.Div(id='GuardarDiv', className="has-text-centered", style={'paddingBottom': '30px'}, children=[
                 html.Div(id='InputMuestrasContainer', children=[
                     html.Label('Number of Samples:', style={'color': colors['text']}),
-                    dcc.Input(id='NmuestrasInput', type='number', value=Nmuestras, min=1, style={'color': colors['text']}),
-                    dcc.Store(id='estado-guardado', data={"message": "No se esta guardando"})
+                    dcc.Input(id='NmuestrasInput', type='number', value=Nmuestras, min=1, style={'color': colors['text']})
                 ]),
                 html.Button('Save Data', id='guardar', n_clicks=0, className="button is-primary"),
                 html.Button('Stop Saving', id='Noguardar', n_clicks=0, className="button is-danger"),
@@ -259,13 +258,10 @@ nGuardar_ant = 0
 nNoGuardar_ant = 0
 
 
-@app.callback(Output('indicativoGuardar', 'children'), [Input('guardar', 'n_clicks'),Input('Noguardar', 'n_clicks'), Input('estado-guardado', 'data')])
-def Guardar(nGuardar, nNoGuardar, data):
+@app.callback(Output('indicativoGuardar', 'children'), [Input('guardar', 'n_clicks'),Input('Noguardar', 'n_clicks')])
+def Guardar(nGuardar, nNoGuardar):
     global nGuardar_ant, nNoGuardar_ant
-    if data['message'] == 'Guardando':
-        pass
-    elif data['message'] == 'No se esta guardando':
-        return 'No Guardando'
+
     if nGuardar_ant != nGuardar:
         nGuardar_ant = nGuardar
         return 'Guardando'
@@ -273,6 +269,8 @@ def Guardar(nGuardar, nNoGuardar, data):
         return 'No Guardando'
     else:
         return 'No Guardando'
+
+
 
 
 #################################################### Supervisión ######################################################
@@ -408,7 +406,7 @@ t = 0
 memoria = []
 T_init = 0
 
-@app.callback([Output('live-update-graph2', 'figure'), Output('estado-guardado', 'data')],
+@app.callback(Output('live-update-graph2', 'figure'),
               [Input('intermediate', 'children')],
               [State('Eleccion', 'value'), State('TipoManual', 'value'),
                 State('FrecSlider', 'value'),State('AmpSlider', 'value'),
@@ -423,7 +421,6 @@ T_init = 0
 def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, manualFijo,
                       Kp1, Ki1, Kd1, Kw1, fc1, Kp2, Ki2, Kd2, Kw2, fc2, SPT1, SPT2, guardando, formato, razon1, razon2):
     global times_list, v1_list, v2_list, t, pid1, pid2, memoria, T_init, nGuardar_ant, nNoGuardar_ant, Nmuestras
-    se_esta_guardando = True if guardando == 'Guardando' else False
     alturas = json.loads(alturas)
     T = datetime.datetime.now()
     v1 = v2 = 0
@@ -469,11 +466,8 @@ def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, ma
                  'v1': v1, 'v2': v2, 'modo': '{}'.format(eleccion), 'sp1': float(SPT1), 'sp2': float(SPT2),
                  'Ki1': float(Ki1),'Kd1': float(Kd1),'Kp1': float(Kp1),'Kw1': float(Kw1), 'fc1': float(fc1),
                  'Ki2': float(Ki2), 'Kd2': float(Kd2), 'Kp2': float(Kp2), 'Kw2': float(Kw2), 'fc2': float(fc2), 'razon1': float(razon1), 'razon2': float(razon2)})
-            
-        if len(memoria) >= Nmuestras:
-            se_esta_guardando = False
-
-
+        # if len(memoria) > Nmuestras:
+        #     guardar_datos(memoria, formato, directory, T_init)
 
     if (guardando == 'No Guardando' and memoria != []):
 
@@ -481,7 +475,6 @@ def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, ma
         memoria = []
         
 
-    output_guardado = {"message": "Guardando"} if se_esta_guardando else {"message": "No se esta guardando"}
 
 
     cliente.valvulas['valvula1'].set_value(v1)
@@ -508,7 +501,7 @@ def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, ma
     fig.append_trace(plot1, 1, 1)
     fig.append_trace(plot2, 1, 2)
 
-    return fig, output_guardado
+    return fig
 
 
 app.run_server()
