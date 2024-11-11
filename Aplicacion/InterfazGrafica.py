@@ -195,7 +195,7 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
                                         html.H4('Anti wind-up (Kw1)', className="has-text-centered"),
                                         dcc.Slider(id='Kw1', min=0, max=100, step=0.01, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Cutoff Frequency (fc1)', className="has-text-centered"),
-                                        dcc.Slider(id='fc1', min=0, max=10000, step=0.5, value=10000, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='fc1', min=0, max=10000, step=0.5, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                 ]),
                                     html.Div(id='P2', className="column", children=[
                                         html.H1('Tank 2', className="has-text-centered is-size-4"),
@@ -210,7 +210,7 @@ app.layout = html.Div(style={'backgroundColor': 'black'}, className="container",
                                         html.H4('Anti wind-up (Kw2)', className="has-text-centered"),
                                         dcc.Slider(id='Kw2', min=0, max=10000, step=0.01, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Cutoff Frequency (fc2)', className="has-text-centered"),
-                                        dcc.Slider(id='fc2', min=0, max=10000, step=0.5, value=10000, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                        dcc.Slider(id='fc2', min=0, max=10000, step=0.5, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                                 ])
                             ])
                         ])
