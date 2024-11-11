@@ -482,8 +482,8 @@ def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, ma
     # Modo automático
     elif eleccion == 'Automatico':
         # SetPoints
-        pid1.setPoint = float(SPT1)
-        pid2.setPoint = float(SPT2)
+        pid1.set_setPoint(float(SPT1))
+        pid2.set_setPoint(float(SPT2))
 
         # Constantes
         pid1.set_PID_param(float(Kp1), float(Ki1), float(Kd1), float(fc1), float(Kw1))

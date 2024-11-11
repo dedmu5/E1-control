@@ -2,7 +2,7 @@ import math
 import time
 
 class G2_PID:
-    def __init__(self, setPoint=0.0, Kp=0.2, Ki=0.0, Kd=0.0, fc=0, Kw=0.3, Vmax=1.0, awu="sat"):
+    def __init__(self, setPoint=0.0, Kp=0.2, Ki=0.0, Kd=0.0, fc=0, Kw=0.3, Vmax=1.0, awu="back"):
         self.lastTime = time.time()
         self.setPoint = setPoint
         self.set_PID_param(Kp, Ki, Kd, fc, Kw)
