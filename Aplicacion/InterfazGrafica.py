@@ -72,7 +72,7 @@ frecMax = 1
 
 app.layout = html.Div(style={'backgroundColor': colors['background']}, className="container", children=[
     html.Section(className="section", style={'backgroundColor': 'black'}, children=[
-        html.H1('Centro de control del Grupo 2', className="title has-text-centered", style={'color': colors['text']}),
+        html.H1('Control Center', className="title has-text-centered", style={'color': colors['text']}),
 
         # Interval component
         dcc.Interval(id='interval-component', interval=int(1/frecMax*1000), n_intervals=0),
@@ -91,27 +91,30 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
 
             # Save section
             html.Div(id='GuardarDiv', className="has-text-centered", style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': 'black'}, children=[
+                html.H4('Save data', className="has-text-centered is-size-2"),
                 html.Div(id='InputMuestrasContainer', children=[
                     html.H4('Number of Samples', className="has-text-centered is-size-4", style={'color': colors['text']}),
                     dcc.Input(id='NmuestrasInput', type='number', value=Nmuestras, min=1)
                 ]),
-                dcc.RadioItems(id='Formato', options=[
-                    {'label': '.csv ', 'value': 'csv'},
-                    {'label': '.json ', 'value': 'json'},
-                    {'label': '.pickle ', 'value': 'pickle'}
-                ], value='csv', className="radio", style={'color': colors['text']}),
                 html.Br(),
+                dcc.RadioItems(id='Formato', style={'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center'}, options=[
+
+                    {'label': '.csv    ', 'value': 'csv'},
+                    {'label': '.json    ', 'value': 'json'},
+                    {'label': '.pickle    ', 'value': 'pickle'}
+                ], value='csv', className="columns radio"),
                 html.Br(),
-                html.Div(id='GuardarContainer', className="columns is-centered", children=[
-                html.Button('Save Data', id='guardar', n_clicks=0, className="column button is-primary"),
-                html.Button('Stop Saving', id='Noguardar', n_clicks=0, className="column button is-danger"),
+                html.Div(id='GuardarContainer', className="columns", style={'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center'}, children=[
+                    html.Button('Save Data', id='guardar', n_clicks=0, className="column is-4 button is-danger", style={'backgroundColor': '#006400', 'border': '2px solid green',  'margin': '0 10px'}),
+                    html.Button('Stop Saving', id='Noguardar', n_clicks=0, className="column is-4 button is-danger", style={'backgroundColor': '#FF0000', 'border': '2px solid red', 'margin': '0 10px'})
                 ]),
                 html.Div(id='indicativoGuardar', children=['Not Saving'], className="has-text-centered is-size-4")
             ]),
             html.Br(),
             # Alarm section
             html.Div(id='AlarmaContainer', className="container", style={'backgroundColor': 'black', 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'color': colors['text']}, children=[
-                html.Div(id='Alarma', style={'backgroundColor': 'black', 'width': '80%', 'height': '70px', 'paddingTop':'25px', 'margin':'auto', 'border': '5px solid yellow', 'boxShadow': '0px 0px 20px 10px yellow'}, children=[
+                html.H4('Alarm', className="has-text-centered is-size-2"),
+                html.Div(id='Alarma', style={'backgroundColor': 'black'}, children=[
                     html.H2(id='AlarmaTexto', className="title has-text-centered", style={'color': '#FFD700'}, children=['Alarm Inactive'])
                 ])
             ]),
@@ -120,6 +123,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
             # Mode selection
             html.Div(id='Modo', className="container", style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': 'black'}, children=[
                 html.H4('Controller Mode', className="has-text-centered is-size-2"),
+                html.Br(),
                 html.H4('Ratio Values', className="has-text-centered is-size-4"),
                 html.Div(id='RazonesDiv', className="columns is-centered", children=[
                     html.Div(id='Razon1Div', className="column has-text-centered", children=[
@@ -136,9 +140,9 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
                 # height: 2em;
                     html.Div(id='EleccionDiv', className="control", children=[
                         dcc.RadioItems(id='Eleccion', options=[
-                            {'label': 'Manual Mode', 'value': 'Manual', 'className': 'radio'},
-                            {'label': 'Automatic Mode', 'value': 'Automatico', 'className': 'radio'}
-                        ], value='Manual', className="radio", style={'color': colors['text']}),
+                            {'label': 'Manual Mode        ', 'value': 'Manual', 'className': 'radio'},
+                            {'label': 'Automatic Mode        ', 'value': 'Automatico', 'className': 'radio'}
+                        ], value='Manual', className="columns radio", style={'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center'}),
                             html.Div(id='MyDiv', className="has-text-centered is-size-4")
                     ]),
 
@@ -147,10 +151,11 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
                             # Manual Mode
                             html.Div(id='Manual', className="container", style={'color': colors['text'], 'background-color': 'black', 'border': '2px solid gray'}, children=[
                             html.H4('Manual Mode', className="has-text-centered is-size-2"),
+                            html.Br(),
                             dcc.RadioItems(id='TipoManual', options=[
-                                {'label': 'Fixed Value', 'value': 'fijo'},
-                                {'label': 'Sine Wave', 'value': 'sinusoide'}
-                            ], value='fijo', className="radio", style={'color': colors['text']}),
+                                {'label': 'Fixed Value        ', 'value': 'fijo'},
+                                {'label': 'Sine Wave        ', 'value': 'sinusoide'}
+                            ], value='fijo', className="columns radio", style={'display': 'flex', 'justifyContent': 'center', 'alignItems': 'center'} ),
 
                             # Sine wave settings
                             html.Div(id='SineWaveDiv', className="columns is-centered", children=[
@@ -174,6 +179,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
                             ]),
                             html.Div(id='Sliders2', className="columns is-centered", children=[
                             # Fixed value input
+                            html.Br(),
                             html.H4('Fixed Value', className="has-text-centered is-size-4"),
                             html.Div(className="has-text-centered", children=[
                                 dcc.Slider(id='ManualFijo', min=0.1, max=1, step=0.01, value=0.3, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
@@ -198,7 +204,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
                                         html.H4('Anti wind-up (Kw1)', className="has-text-centered"),
                                         dcc.Slider(id='Kw1', min=0, max=100, step=0.1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Cutoff Frequency (fc1)', className="has-text-centered"),
-                                        dcc.Slider(id='fc1', min=0, max=10000, step=0.5, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='fc1', min=0, max=5000, step=1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                 ]),
                                     html.Div(id='P2', className="column", children=[
                                         html.H1('Tank 2', className="has-text-centered is-size-4"),
@@ -213,7 +219,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
                                         html.H4('Anti wind-up (Kw2)', className="has-text-centered"),
                                         dcc.Slider(id='Kw2', min=0, max=100, step=0.1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Cutoff Frequency (fc2)', className="has-text-centered"),
-                                        dcc.Slider(id='fc2', min=0, max=10000, step=0.5, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                        dcc.Slider(id='fc2', min=0, max=5000, step=1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                                 ])
                             ])
                         ])
@@ -283,11 +289,9 @@ def toggle_manual_mode(mode):
 def Alarma(n):
     global eventoColor
     if eventoColor != 0:
-        style = {'backgroundColor': '#FF0000', 'width': '80%', 'height': '70px', 'paddingTop': '25px', 'margin': 'auto',
-                 'borderStyle': 'solid', 'borderWidth': '5px', 'borderColor': '#B8860B'}
+        style = {'backgroundColor': '#FF0000', 'padding': '20px', 'border': '2px solid red', 'borderRadius': '10px'}
     else:
-        style = {'backgroundColor': '#006400', 'width': '80%', 'height': '70px', 'paddingTop': '25px', 'margin': 'auto',
-                 'borderStyle': 'solid', 'borderWidth': '5px', 'borderColor': '#B8860B'}
+        style = {'backgroundColor': '#006400', 'padding': '20px', 'border': '2px solid green', 'borderRadius': '10px'}
     eventoColor = 0
     return style
 
@@ -296,9 +300,9 @@ def TextoAlarma(n):
     global eventoTexto
     if eventoTexto != 0:
         mensaje =eventoTexto.Message.Text.split(':')
-        res = 'Alarma Activa: {}: {}'.format(mensaje[1], round(float(mensaje[2]), 2))
+        res = '{}: {}'.format(mensaje[1], round(float(mensaje[2]), 2))
     else:
-        res = 'Alarma Inactiva'
+        res = 'Inactive'
     eventoTexto = 0
     return res
 
@@ -313,11 +317,11 @@ def Guardar(nGuardar, nNoGuardar):
 
     if nGuardar_ant != nGuardar:
         nGuardar_ant = nGuardar
-        return 'Guardando'
+        return 'Saving...'
     elif nNoGuardar_ant != nNoGuardar:
-        return 'No Guardando'
+        return 'Not Saving'
     else:
-        return 'No Guardando'
+        return 'Not Saving'
 
 
 
@@ -340,10 +344,10 @@ def UpdateText(alturas):
     alturas = json.loads(alturas)
     style = {'padding': '5px', 'fontSize': '16px', 'border': '2px solid powderblue'}
     return [
-        html.Span('Tanque 1: {}'.format(round(alturas['h1'], 2)), style=style),
-        html.Span('Tanque 2: {}'.format(round(alturas['h2'], 2)), style=style),
-        html.Span('Tanque 3: {}'.format(round(alturas['h3'], 2)), style=style),
-        html.Span('Tanque 4: {}'.format(round(alturas['h4'], 2)), style=style)
+        html.Span('Tank 1: {}'.format(round(alturas['h1'], 2)), style=style),
+        html.Span('Tank 2: {}'.format(round(alturas['h2'], 2)), style=style),
+        html.Span('Tank 3: {}'.format(round(alturas['h3'], 2)), style=style),
+        html.Span('Tank 4: {}'.format(round(alturas['h4'], 2)), style=style)
     ]
 
 times = deque(maxlen=100)
@@ -418,7 +422,7 @@ def UpdateGraph(alturas, eleccion, SPT1, SPT2):
     [Input(component_id='Eleccion', component_property='value')]
 )
 def update_output_div(input_value):
-    return 'Ha seleccionado el modo: {}'.format(input_value)
+    return 'Selected mode: {}'.format(input_value)
 
 #################### Modo Manual ##################################
 @app.callback(Output('1', 'children'), [Input('FrecSlider', 'value')])
