@@ -417,10 +417,10 @@ cliente.conectar()
 ######################### Main loop #################################
 
 # Setup
-x0=[40, 40, 40, 40] #Condición inicial de los tanques
+# x0=[40, 40, 40, 40] #Condición inicial de los tanques
 #x0=[33.915, 35.224, 4.485, 3.914] #Condición inicial de los tanques (eq para u_eq = (0.5,0.5)) y gamma = (0.7,0.6)
 #x0=[28.029, 43.489, 10.091, 15.656] #Condic
-
+x0=[12.21, 14.84, 1.61, 1.41] #Condición inicial de los tanques (eq para u_eq = (0.3,0.3)) y gamma = (0.7,0.6)
 #
 # drh dfh dión inicial de los tanques (eq para u_eq = (0.5,0.5)) y gamma = (0.4,0.4)
 Hmax = 50
