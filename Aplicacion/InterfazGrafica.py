@@ -182,11 +182,16 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
                             html.Div(id='Sliders2', className="columns is-centered", children=[
                             # Fixed value input
                             html.Br(),
-                            html.H4('Fixed Value', className="has-text-centered is-size-4"),
+                            html.H4('Fixed Value for Tank 1', className="has-text-centered is-size-4"),
                             html.Div(className="has-text-centered", children=[
-                                dcc.Slider(id='ManualFijo', min=0.1, max=1, step=0.01, value=0.3, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
-                            ])
-                        ]),
+                                dcc.Slider(id='ManualFijo1', min=0.1, max=1, step=0.01, value=0.3, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                            ]),
+                            html.Br(),
+                            html.H4('Fixed Value for Tank 2', className="has-text-centered is-size-4"),
+                            html.Div(className="has-text-centered", children=[
+                                dcc.Slider(id='ManualFijo2', min=0.1, max=1, step=0.01, value=0.3, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+
+                        ])]),
                     ]),
 
                         # Automatic Mode
@@ -466,14 +471,14 @@ T_init = 0
               [State('Eleccion', 'value'), State('TipoManual', 'value'),
                 State('FrecSlider', 'value'),State('AmpSlider', 'value'),
                 State('OffsetSlider', 'value'),State('FaseSlider', 'value'),
-                State('ManualFijo', 'value'), State('Kp1', 'value'),
+                State('ManualFijo1', 'value'), State('ManualFijo2', 'value'), State('Kp1', 'value'),
                 State('Ki1', 'value'), State('Kd1', 'value'), State('Kw1','value'),
                 State('Kp2', 'value'), State('Ki2', 'value'), State('Kd2', 'value'), State('Kw2','value'),
                 State('Tf1', 'value'), State('Tf2', 'value'),
                 State('SPT1', 'value'), State('SPT2', 'value'),
                 State('indicativoGuardar', 'children'), State('Formato', 'value'),
                 State('Razon1', 'value'), State('Razon2', 'value')])
-def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, manualFijo,
+def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, manualFijo1, manualFijo2,
                       Kp1, Ki1, Kd1, Kw1, Tf1, Kp2, Ki2, Kd2, Kw2, Tf2, SPT1, SPT2, guardando, formato, razon1, razon2):
     global times_list, v1_list, v2_list, t, pid1, pid2, memoria, T_init, nGuardar_ant, nNoGuardar_ant, Nmuestras
     alturas = json.loads(alturas)
@@ -491,8 +496,8 @@ def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, ma
 
     # Si se elige el valor fijo
     elif eleccion == 'Manual' and tipoManual == 'fijo':
-        v1 = float(manualFijo)
-        v2 = float(manualFijo)
+        v1 = float(manualFijo1)
+        v2 = float(manualFijo2)
 
     # Modo automático
     elif eleccion == 'Automatico':
