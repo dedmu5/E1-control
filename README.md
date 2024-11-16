@@ -1,3 +1,5 @@
 # E1-control
 Integrantes:
-Rodrigo Pozo
+- Rodrigo Pozo
+- Cristobal Vasquez
+- Vicente Morales
