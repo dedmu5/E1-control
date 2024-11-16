@@ -184,14 +184,14 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
                             html.Br(),
                             html.H4('Fixed Value for Tank 1', className="has-text-centered is-size-4"),
                             html.Div(className="has-text-centered", children=[
-                                dcc.Slider(id='ManualFijo1', min=0.1, max=1, step=0.01, value=0.3, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                dcc.Slider(id='ManualFijo1', min=0.1, max=1, step=0.01, value=0.5, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                             ]),
                             html.Br(),
                             html.H4('Fixed Value for Tank 2', className="has-text-centered is-size-4"),
                             html.Div(className="has-text-centered", children=[
                                 dcc.Slider(id='ManualFijo2', min=0.1, max=1, step=0.01, value=0.3, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
-
-                        ])]),
+                        ])
+                    ])
                     ]),
 
                         # Automatic Mode
