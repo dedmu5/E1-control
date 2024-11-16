@@ -62,6 +62,7 @@ cliente.conectar()
 # Aplicación con Dash
 colors = {
     'background': '#111111',
+    'background-section': '#2B2B2B',
     'text': '#FFD700'
 }
 
@@ -71,7 +72,7 @@ frecMax = 1
 
 
 app.layout = html.Div(style={'backgroundColor': colors['background']}, className="container", children=[
-    html.Section(className="section", style={'backgroundColor': 'black'}, children=[
+    html.Section(className="section", style={'backgroundColor': colors['background']}, children=[
         html.H1('Control Center', className="title has-text-centered", style={'color': colors['text']}),
 
         # Interval component
@@ -79,6 +80,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
         
         # Live update text
         html.Div(id='live-update-text1', className="has-text-centered", style={'color': colors['text']}),
+        html.Br(),
 
         # First live update graph
         dcc.Graph(id='live-update-graph1'),
@@ -90,7 +92,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
             dcc.Graph(id='live-update-graph2'),
 
             # Save section
-            html.Div(id='GuardarDiv', className="has-text-centered", style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': 'black'}, children=[
+            html.Div(id='GuardarDiv', className="has-text-centered", style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': colors['background-section']}, children=[
                 html.H4('Save data', className="has-text-centered is-size-2"),
                 html.Div(id='InputMuestrasContainer', children=[
                     html.H4('Number of Samples', className="has-text-centered is-size-4", style={'color': ['text']}),
@@ -112,7 +114,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
             ]),
             html.Br(),
             # Alarm section
-            html.Div(id='AlarmaContainer', className="container", style={'backgroundColor': 'black', 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'color': colors['text']}, children=[
+            html.Div(id='AlarmaContainer', className="container", style={'backgroundColor': colors['background-section'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'color': colors['text']}, children=[
                 html.H4('Alarm', className="has-text-centered is-size-2"),
                 html.Div(id='Alarma', style={'backgroundColor': 'black'}, children=[
                     html.H2(id='AlarmaTexto', className="title has-text-centered", style={'color': '#FFD700'}, children=['Alarm Inactive'])
@@ -121,18 +123,18 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
             html.Br(),
 
             # Mode selection
-            html.Div(id='Modo', className="container", style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': 'black'}, children=[
+            html.Div(id='Modo', className="container", style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': colors['background-section']}, children=[
                 html.H4('Controller Mode', className="has-text-centered is-size-2"),
                 html.Br(),
                 html.H4('Ratio Values', className="has-text-centered is-size-4"),
                 html.Div(id='RazonesDiv', className="columns is-centered", children=[
                     html.Div(id='Razon1Div', className="column has-text-centered", children=[
                         html.Label('Ratio 1'),
-                        dcc.Slider(id='Razon1', min=0, max=1, step=0.05, value=0.5, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                        dcc.Slider(id='Razon1', min=0, max=1, step=0.05, value=0.7, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                     ]),
                     html.Div(id='Razon2Div', className="column has-text-centered", children=[
                         html.Label('Ratio 2'),
-                        dcc.Slider(id='Razon2', min=0, max=1, step=0.05, value=0.5, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                        dcc.Slider(id='Razon2', min=0, max=1, step=0.05, value=0.6, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                     ])
                 ]),
                 # border: 0px;
@@ -147,7 +149,7 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
                     ]),
 
                         # Modes section
-                    html.Div(id='Modos', className="container",style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': 'black'} , children=[
+                    html.Div(id='Modos', className="container",style={'color': colors['text'], 'padding': '20px', 'border': '2px solid gold', 'borderRadius': '10px', 'backgroundColor': colors['background-section']} , children=[
                             # Manual Mode
                             html.Div(id='Manual', className="container", style={'color': colors['text'], 'background-color': 'black', 'border': '2px solid gray'}, children=[
                             html.H4('Manual Mode', className="has-text-centered is-size-2"),
@@ -202,14 +204,14 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
                                         html.H4('Derivative (Kd1)', className="has-text-centered"),
                                         dcc.Slider(id='Kd1', min=0, max=100, step=0.5, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Anti wind-up (Kw1)', className="has-text-centered"),
-                                        dcc.Slider(id='Kw1', min=0, max=10, step=0.1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
-                                        html.H4('Cutoff Frequency (fc1)', className="has-text-centered"),
-                                        dcc.Slider(id='fc1', min=0, max=5000, step=1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='Kw1', min=0, max=10, step=0.01, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        html.H4('D filter const. (Tf1)', className="has-text-centered"),
+                                        dcc.Slider(id='Tf1', min=0, max=100, step=0.5, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                 ]),
                                     html.Div(id='P2', className="column", children=[
                                         html.H1('Tank 2', className="has-text-centered is-size-4"),
                                         html.H4('SetPoint Tank 2', className="has-text-centered"),
-                                        dcc.Slider(id='SPT2', min=0, max=100, step=0.5, value=12, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        dcc.Slider(id='SPT2', min=0, max=100, step=0.5, value=13, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Proportional (Kp2)', className="has-text-centered"),
                                         dcc.Slider(id='Kp2', min=0, max=100, step=0.5, value=1, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Integral (Ki2)', className="has-text-centered"),
@@ -217,9 +219,9 @@ app.layout = html.Div(style={'backgroundColor': colors['background']}, className
                                         html.H4('Derivative (Kd2)', className="has-text-centered"),
                                         dcc.Slider(id='Kd2', min=0, max=100, step=0.5, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
                                         html.H4('Anti wind-up (Kw2)', className="has-text-centered"),
-                                        dcc.Slider(id='Kw2', min=0, max=10, step=0.1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
-                                        html.H4('Cutoff Frequency (fc2)', className="has-text-centered"),
-                                        dcc.Slider(id='fc2', min=0, max=5000, step=1, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
+                                        dcc.Slider(id='Kw2', min=0, max=10, step=0.01, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered"),
+                                        html.H4('D filter const. (Tf2)', className="has-text-centered"),
+                                        dcc.Slider(id='Tf2', min=0, max=100, step=0.5, value=0, marks=None, tooltip={"placement": "bottom"}, className="column has-text-centered")
                                 ])
                             ])
                         ])
@@ -241,7 +243,7 @@ app.index_string = '''
         {%css%}
         <style>
             html, body {
-                background-color: black;
+                background-color: #111111;
                 margin: 0;
                 height: 100%;
             }
@@ -342,7 +344,7 @@ def UpdateInfo(n):
 @app.callback(Output('live-update-text1', 'children'), [Input('intermediate', 'children')])
 def UpdateText(alturas):
     alturas = json.loads(alturas)
-    style = {'padding': '5px', 'fontSize': '16px', 'border': '2px solid powderblue'}
+    style = {'padding': '15px', 'fontSize': '20px', 'border': '2px solid powderblue', 'backgroundColor': colors['background-section']}
     return [
         html.Span('Tank 1: {}'.format(round(alturas['h1'], 2)), style=style),
         html.Span('Tank 2: {}'.format(round(alturas['h2'], 2)), style=style),
@@ -467,12 +469,12 @@ T_init = 0
                 State('ManualFijo', 'value'), State('Kp1', 'value'),
                 State('Ki1', 'value'), State('Kd1', 'value'), State('Kw1','value'),
                 State('Kp2', 'value'), State('Ki2', 'value'), State('Kd2', 'value'), State('Kw2','value'),
-                State('fc1', 'value'), State('fc2', 'value'),
+                State('Tf1', 'value'), State('Tf2', 'value'),
                 State('SPT1', 'value'), State('SPT2', 'value'),
                 State('indicativoGuardar', 'children'), State('Formato', 'value'),
                 State('Razon1', 'value'), State('Razon2', 'value')])
 def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, manualFijo,
-                      Kp1, Ki1, Kd1, Kw1, fc1, Kp2, Ki2, Kd2, Kw2, fc2, SPT1, SPT2, guardando, formato, razon1, razon2):
+                      Kp1, Ki1, Kd1, Kw1, Tf1, Kp2, Ki2, Kd2, Kw2, Tf2, SPT1, SPT2, guardando, formato, razon1, razon2):
     global times_list, v1_list, v2_list, t, pid1, pid2, memoria, T_init, nGuardar_ant, nNoGuardar_ant, Nmuestras
     alturas = json.loads(alturas)
     T = datetime.datetime.now()
@@ -499,8 +501,8 @@ def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, ma
         pid2.setPoint = float(SPT2)
 
         # Constantes
-        pid1.set_PID_param(float(Kp1), float(Ki1), float(Kd1), float(fc1), float(Kw1))
-        pid2.set_PID_param(float(Kp2), float(Ki2), float(Kd2), float(fc2), float(Kw2))
+        pid1.set_PID_param(float(Kp1), float(Ki1), float(Kd1), float(Tf1), float(Kw1))
+        pid2.set_PID_param(float(Kp2), float(Ki2), float(Kd2), float(Tf2), float(Kw2))
 
         v1 = pid1.update(alturas['h1'])
         v2 = pid2.update(alturas['h2'])
@@ -517,8 +519,8 @@ def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, ma
             memoria.append(
                 {'time': T, 'h1': alturas['h1'], 'h2': alturas['h2'], 'h3': alturas['h3'], 'h4': alturas['h4'],
                  'v1': v1, 'v2': v2, 'modo': '{}'.format(eleccion), 'sp1': float(SPT1), 'sp2': float(SPT2),
-                 'Ki1': float(Ki1),'Kd1': float(Kd1),'Kp1': float(Kp1),'Kw1': float(Kw1), 'fc1': float(fc1),
-                 'Ki2': float(Ki2), 'Kd2': float(Kd2), 'Kp2': float(Kp2), 'Kw2': float(Kw2), 'fc2': float(fc2), 'razon1': float(razon1), 'razon2': float(razon2)})
+                 'Ki1': float(Ki1),'Kd1': float(Kd1),'Kp1': float(Kp1),'Kw1': float(Kw1), 'Tf1': float(Tf1),
+                 'Ki2': float(Ki2), 'Kd2': float(Kd2), 'Kp2': float(Kp2), 'Kw2': float(Kw2), 'Tf2': float(Tf2), 'razon1': float(razon1), 'razon2': float(razon2)})
         # if len(memoria) > Nmuestras:
         #     guardar_datos(memoria, formato, directory, T_init)
 
@@ -527,9 +529,6 @@ def SalidaControlador(alturas, eleccion, tipoManual, frec, amp, offset, fase, ma
         guardar_datos(memoria, formato, directory, T_init)
         memoria = []
         
-
-
-
     cliente.valvulas['valvula1'].set_value(v1)
     cliente.valvulas['valvula2'].set_value(v2)
     times_list.append(T)
